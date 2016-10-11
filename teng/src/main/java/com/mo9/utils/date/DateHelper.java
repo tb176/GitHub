@@ -309,7 +309,7 @@ public class DateHelper {
 	public static void main(String[] args){
 		Date d1 = DateHelper.convertToDate("2013-12-01", DateHelper.YEAR_MONTH_DAY);
 		Date d2 = DateHelper.convertToDate("2013-12-29", DateHelper.YEAR_MONTH_DAY);
-		System.out.print(DateHelper.getTimeLagAsWeek(d1, d2));
+		System.out.print(DateHelper.getTimeLagAsDay(d1, d2));
 		
 	}
 	

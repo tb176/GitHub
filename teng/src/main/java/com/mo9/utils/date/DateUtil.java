@@ -1532,7 +1532,6 @@ public static Date getDate(String dateStr, String patten)
 		try {
 			 sDate=getDate(getDate(dateStr, old_pattern), new_pattern);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return  sDate;
