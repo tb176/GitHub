@@ -11,7 +11,7 @@ public class MyTopic implements Subject {
 	private final Object MUTEX= new Object();
 
 	public MyTopic(){
-		this.observers=new ArrayList<>();
+		this.observers=new ArrayList<Observer>();
 	}
 	@Override
 	public void register(Observer obj) {
