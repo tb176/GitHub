@@ -1,4 +1,4 @@
-package com.mo9.web;
+package com.mo9.webUtils;
 
 import java.math.BigDecimal;
 import java.util.Calendar;

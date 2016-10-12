@@ -9,7 +9,7 @@ import org.mortbay.jetty.security.Credential.MD5;
 import jxl.common.Logger;
 
 import com.mo9.utils.md5.Md5Encrypt;
-import com.mo9.web.GetRequest;
+import com.mo9.webUtils.GetRequest;
 
 
 

@@ -7,7 +7,7 @@
  * @Description:
  * @Version : V1.0 Date Author Changes 2014-4-1 jian
  */
-package com.mo9.web;
+package com.mo9.webUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

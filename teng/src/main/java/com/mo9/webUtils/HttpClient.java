@@ -6,7 +6,7 @@
  *
  * Copyright ©2011 moKredit Inc. All Rights Reserved
  */
-package com.mo9.web;
+package com.mo9.webUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

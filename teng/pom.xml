@@ -8,7 +8,8 @@
   <name>teng Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-      <!-- 测试工具包 -->
+      <!-- 测试工具包  <scope>test</scope>-->
+      <!-- 表示dependency作用在测试时，不作用在运行时。 只在测试时使用，用于编译和运行测试代码。不会随项目发布。 -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -16,7 +17,10 @@
       <scope>test</scope>
     </dependency>
     
-     <!--正式工具包  -->
+     <!--正式工具包  scope默认不写-->
+     <!--compile
+                默认的scope，表示 dependency 都可以在生命周期中使用。
+                而且，这些dependencies 会传递到依赖的项目中。适用于所有阶段，会随着项目一起发布  -->
 	    <!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
 		<dependency>
 		    <groupId>net.sourceforge.jexcelapi</groupId>

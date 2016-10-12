@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mo9.web;
+package com.mo9.webUtils;
 
 import java.io.IOException;
 import java.util.Collection;
