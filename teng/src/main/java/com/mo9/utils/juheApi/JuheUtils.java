@@ -11,6 +11,9 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
+
 import net.sf.json.JSONObject;
  
 /**
@@ -19,6 +22,7 @@ import net.sf.json.JSONObject;
 **/
  
 public class JuheUtils {
+	private static Logger logger = Logger.getLogger(JuheUtils.class);
     public static final String DEF_CHATSET = "UTF-8";
     public static final int DEF_CONN_TIMEOUT = 30000;
     public static final int DEF_READ_TIMEOUT = 30000;
@@ -31,11 +35,11 @@ public class JuheUtils {
     //返回数据类型 json/xml 默认json
     public static final String DTYPE = "json";
     public static void main(String[] args) {
-    	getRequest3();
+    	getQueryIdcardLeakInfo();
 	}
  
     //1.身份证信息查询
-    public static void getRequest1(){
+    public static String  queryIdcardInfo(){
         String result =null;
         String url ="http://apis.juhe.cn/idcard/index";//请求接口地址
         Map<String,Object> params = new HashMap<String,Object>();//请求参数
@@ -47,17 +51,18 @@ public class JuheUtils {
             result =net(url, params, "GET");
             JSONObject object = JSONObject.fromObject(result);
             if(object.getInt("error_code")==0){
-                System.out.println(object.get("result"));
+               logger.info(object.get("result"));
             }else{
-                System.out.println(object.get("error_code")+":"+object.get("reason"));
+               logger.info(object.get("error_code")+":"+object.get("reason"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
     }
  
-    //2.身份证泄漏查询
-    public static void getRequest2(){
+    //2.身份证泄漏信息查询
+    public static String getQueryIdcardLeakInfo(){
         String result =null;
         String url ="http://apis.juhe.cn/idcard/leak";//请求接口地址
         Map<String,Object> params = new HashMap<String,Object>();//请求参数
@@ -69,17 +74,19 @@ public class JuheUtils {
             result =net(url, params, "GET");
             JSONObject object = JSONObject.fromObject(result);
             if(object.getInt("error_code")==0){
-                System.out.println(object.get("result"));
+               logger.info(object.get("result"));
             }else{
-                System.out.println(object.get("error_code")+":"+object.get("reason"));
+               logger.info(object.get("error_code")+":"+object.get("reason"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        return result;
     }
  
-    //3.身份证挂失查询
-    public static void getRequest3(){
+    //3.身份证挂失信息查询
+    public static String getQueryIdcardLossInfo(){
         String result =null;
         String url ="http://apis.juhe.cn/idcard/loss";//请求接口地址
         Map<String,Object> params = new HashMap<String,Object>();//请求参数
@@ -91,13 +98,14 @@ public class JuheUtils {
             result =net(url, params, "GET");
             JSONObject object = JSONObject.fromObject(result);
             if(object.getInt("error_code")==0){
-                System.out.println(object.get("result"));
+               logger.info(object.get("result"));
             }else{
-                System.out.println(object.get("error_code")+":"+object.get("reason"));
+               logger.info(object.get("error_code")+":"+object.get("reason"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
     }
  
  
