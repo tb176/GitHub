@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+    <!-- Shiro Filter -->
+	<bean id="shiroFilter" class="com.mo9.fastloan.filter.Mo9ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login/loginIndex.do" />
+		<property name="successUrl" value="/"/>
+		<!-- 添加各种验证过滤器 -->
+	    <property name="filters">
+	    	<map>
+	    	    <entry key="roleOrFilter" value-ref="roleOrFilter"/>
+	    	</map>
+	    </property>
+		<!-- shiro连接约束配置,在这里使用自定义的动态获取资源类 -->
+		<!-- 
+			1、authc 表示需要认证的链接
+			2、perms[/url] 表示该链接需要拥有对应的资源/权限才能访问
+			3、roles[admin] 表示需要对应的角色才能访问
+			4、perms[admin:url] 表示需要对应角色的资源才能访问
+		 -->
+    	<property name="filterChainDefinitions">
+			<value>
+			    /login/index2.do = anon
+			    /repayment/returnYLPay.do = anon
+			    /api/app/loadAgreementApp.do = anon
+				/css/* = anon
+				/images/* = anon
+				/images/iscroll/* = anon
+				/js/* = anon
+				/js/iscroll/* = anon
+				/js/jquery/* = anon
+				/login/coupons* = anon
+				/order/test.do* = anon
+				/mobile/resetTelecom.do = anon
+				/mobile/resetMobile.do = anon
+				/mobile/resetUnicom.do = anon
+				/buyer/zmxy* = anon
+				/login/index.do = authc
+				/login/isCanSubmit.do = authc
+				/buyer/getCouponsCounts.do = authc
+				/order/getSuccOrderRandom.do = authc
+				/buyer/gotoBanner.do = authc
+				/bankcard/getProvince.do = authc
+				/bankcard/getCity.do = authc
+				/bankcard/checkBankCardIdAndName.do = authc
+				/bankcard/checkBankCardWithoutBankName.do = authc
+				/bankcard/addCard.do = authc
+				/bankcard/bindcard.do = authc
+				/myaccount/* = authc
+				/repayment/* = authc
+				/buyer/mergeBuyerCreditStatus.do = authc
+				/order/* 	= roleOrFilter["submitUser,oldUser"]				
+				/buyer/findIdcard.do 	= roleOrFilter["submitUser,oldUser"]
+				/buyer/loadAgreement.do = authc
+				/buyer/beforeLoadAgreement.do = authc
+				/buyer/* 	= roleOrFilter["submitUser"]
+				/mobile/* 	= roleOrFilter["submitUser"]
+				/bankcard/* = roleOrFilter["submitUser"]
+				
+				/cashMere/* = anon
+				/api/app/onRegister.do = anon
+				/limit/cashMereInfo/* = anon
+				
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="mo9MemcachedClientBuilder" class="com.mo9.riskdomain.memcache.Mo9MemcachedClientBuilder">
+	    <property name="servers" value="${memcached.servers}"/>
+	    <property name="failover" value="${memcached.failover}"/>
+	</bean>
+	<bean id="mo9MemcachedClient" factory-bean="mo9MemcachedClientBuilder" factory-method="build" destroy-method="shutdown"/>
+	
+	
+    <bean id="roleOrFilter" class="com.mo9.fastloan.filter.Mo9AuthorizationFilter"></bean>
+	
+	<bean id="fastloanRealm" class="com.mo9.fastloan.filter.FastloanRealm"></bean>
+	<!-- Shiro's main business-tier object for web-enabled applications -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="sessionManager" ref="defaultWebSessionManager" />
+		<property name="realm" ref="fastloanRealm"></property>
+	</bean>
+	
+	<bean id="sessionDAO" class="com.mo9.fastloan.http.Mo9Session"></bean>
+	
+	<bean id="defaultWebSessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">  
+	    <property name="sessionValidationInterval" value="1800000"/>  <!-- 相隔多久检查一次session的有效性 -->
+		<property name="globalSessionTimeout" value="1800000"/>  <!-- session 有效时间为半小时 （毫秒单位）-->
+		<property name="sessionIdCookie.name" value="jsid"/> 
+		<property name="sessionDAO" ref="sessionDAO"></property>
+	</bean>
+	  
+	
+</beans>
