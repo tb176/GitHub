@@ -8,6 +8,7 @@ import org.mortbay.jetty.security.Credential.MD5;
 
 import jxl.common.Logger;
 
+import com.mo9.utils.juheApi.JuheUtils;
 import com.mo9.utils.md5.Md5Encrypt;
 import com.mo9.webUtils.GetRequest;
 
@@ -23,6 +24,7 @@ private static final String KEY = "2F2C02B40BF96352";// 可以自定义生成 MD
 	public static void main(String[] args) throws IOException {
 		String url = "https://github.com/tb176/GitHub/tree/master/teng/src/main/java/com/mo9";
 		Long2short(url);
+		JuheUtils.getRequest2();
 		
 	}
 	
